@@ -8,19 +8,6 @@ use WP_REST_Request;
 
 class LessonsController {
 
-	public function register(): void {
-		register_rest_route('my-lms/v1', '/courses/(?P<id>\d+)/lessons', [
-			[
-				'methods'  => 'GET',
-				'callback' => [$this, 'index'],
-			],
-			[
-				'methods'  => 'POST',
-				'callback' => [$this, 'store'],
-			],
-		]);
-	}
-
 	public function index(WP_REST_Request $request): \WP_REST_Response {
 		$result = LessonService::listByCourse((int) $request['id']);
 

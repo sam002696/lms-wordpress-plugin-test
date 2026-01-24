@@ -8,31 +8,6 @@ use WP_REST_Request;
 
 class CoursesController {
 
-	public function register(): void {
-
-		register_rest_route( 'my-lms/v1', '/courses', [
-			[
-				'methods'  => 'GET',
-				'callback' => [ $this, 'index' ],
-			],
-			[
-				'methods'  => 'POST',
-				'callback' => [ $this, 'store' ],
-			],
-		] );
-
-		register_rest_route( 'my-lms/v1', '/courses/(?P<id>\d+)', [
-			[
-				'methods'  => 'PUT',
-				'callback' => [ $this, 'update' ],
-			],
-			[
-				'methods'  => 'DELETE',
-				'callback' => [ $this, 'destroy' ],
-			],
-		] );
-	}
-
 	public function index(): \WP_REST_Response {
 		return Response::success(
 			CourseService::getAll()

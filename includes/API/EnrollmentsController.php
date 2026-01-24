@@ -8,22 +8,6 @@ use WP_REST_Request;
 
 class EnrollmentsController {
 
-	public function register(): void {
-		register_rest_route('my-lms/v1', '/courses/(?P<id>\d+)/enroll', [
-			[
-				'methods'  => 'POST',
-				'callback' => [$this, 'enroll'],
-			],
-		]);
-
-		register_rest_route('my-lms/v1', '/me/enrollments', [
-			[
-				'methods'  => 'GET',
-				'callback' => [$this, 'myCourses'],
-			],
-		]);
-	}
-
 	public function enroll(WP_REST_Request $request): \WP_REST_Response {
 		$result = EnrollmentService::enroll((int) $request['id']);
 
