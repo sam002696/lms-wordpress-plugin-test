@@ -15,6 +15,7 @@ class CoursesController {
 	}
 
 	public function store( WP_REST_Request $request ): \WP_REST_Response {
+		$params = $request->get_json_params();
 		$result = CourseService::create( $request->get_json_params() );
 
 		if ( is_wp_error( $result ) ) {

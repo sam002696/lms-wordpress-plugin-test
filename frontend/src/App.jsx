@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [courses, setCourses] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+        fetch('http://localhost:10003/wp-json/my-lms/v1/courses')
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Failed to fetch courses')
+                }
+                return res.json()
+            })
+            .then((data) => {
+                // console.log(data)
+                // assuming Response::success() returns { success, data }
+                setCourses(data.data ?? [])
+            })
+            .catch((err) => {
+                setError(err.message)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }, [])
+
+    if (loading) return <p>Loading courses...</p>
+    if (error) return <p>Error: {error}</p>
+
+    return (
+        <div style={{ padding: '20px' }}>
+            <h1>Courses</h1>
+
+            {courses.length === 0 && <p>No courses found.</p>}
+
+            <ul>
+                {courses.map((course) => (
+                    <li key={course.id}>
+                        <strong>{course.title}</strong>
+                        <p>{course.description}</p>
+                        <small>Price: ${course.price}</small>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
 }
 
 export default App
