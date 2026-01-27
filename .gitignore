@@ -12,6 +12,9 @@ frontend/node_modules/
 # Build output
 frontend/dist/
 
+# vendor
+vendor/
+
 # Env
 .env
 .env.*
