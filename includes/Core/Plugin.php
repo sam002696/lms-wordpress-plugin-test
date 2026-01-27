@@ -20,5 +20,9 @@ class Plugin {
 		add_action( 'init', [ Shortcodes::class, 'register' ] );
 
 
+		add_filter( 'wp_new_user_notification_email', '__return_false' );
+		add_filter( 'wp_new_user_notification_email_admin', '__return_false' );
+
+
 	}
 }

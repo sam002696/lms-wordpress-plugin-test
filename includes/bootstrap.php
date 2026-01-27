@@ -3,6 +3,9 @@
 
 use MyLMS\Core\Plugin;
 
+require_once __DIR__ . '/API/middleware.php';
+
+
 require_once __DIR__ . '/Core/Plugin.php';
 require_once __DIR__ . '/Core/Shortcodes.php';
 require_once __DIR__ . '/API/RestController.php';
